@@ -16,6 +16,36 @@ survive the purge. Cite this file or the upstream commit instead.
   drift between commits; the commit and file hash above are the stable
   reference.
 
+## License of the excerpted material
+
+The code quoted below is from `inspect_swe`, redistributed here under its own
+licence. This notice is MIT's only redistribution obligation, and it applies to
+the excerpt, not to the rest of this repository.
+
+```
+SPDX-License-Identifier: MIT
+
+Copyright (c) 2025 Meridian Labs
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
 **This is corroboration, not T-005's source of record.** The mechanism reads
 Anthropic's own install script to find the download base URL — that install
 script is the primary source, and `inspect_swe` is one reading of it. T-005
