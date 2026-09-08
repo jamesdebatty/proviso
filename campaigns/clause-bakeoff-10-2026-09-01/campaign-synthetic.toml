@@ -1,0 +1,101 @@
+# Clause bakeoff 10, offline lifecycle proof (clause-campaign/1, synthetic/1).
+# The live declaration is campaign.toml; this one exercises the same inputs
+# against the placeholders and proves nothing about a model.
+#
+# Written 2026-09-01. Every value below is checkable against protocol.md; the
+# hashes bind the protocol, the three CLAUDE.md variants, the five probe trees
+# (prompt, seed, synthetic placeholders, must-cover list) and the two rubrics.
+# `python3 scripts/clause_campaign.py check <this file>` validates it.
+#
+# THE CAMPAIGN HAS NOT RUN. The only adapter clause-campaign/1 exposes is the
+# offline synthetic one, and the placeholders under probes/*/synthetic/ are not
+# model output. A live run needs T-023 and James's per-run authorization.
+
+schema = "clause-campaign/1"
+
+[campaign]
+id = "clause-bakeoff-10-2026-09-01"
+protocol = "protocol.md"
+protocol_sha256 = "3a203dd274d94c7dee922711694f950295b02373138f9ba659fd956a0e5cb1d3"
+repetitions = 5                    # protocol.md "Design": 3 arms x 5 probes x 5
+
+[execution]
+adapter = "synthetic/1"            # offline placeholder lifecycle only; see protocol.md
+network = false                    # "What cannot run today"
+model = "synthetic-fixture/1"      # the intended live generator is claude-opus-5,
+                                   # effort high, no tools (protocol.md "Environment
+                                   # freeze"); this format cannot yet declare it
+
+[[variants]]
+id = "a1-response-numbers"
+claude_md = "variants/a1-response-numbers.md"
+sha256 = "f70f86a92e9fa1b1a2161adb5c64e00cd069e16075086dd9ccf61d7b75b5b2cf"   # Response style + Numbers; bakeoff 8 composite bytes
+
+[[variants]]
+id = "d1-density-long"
+claude_md = "variants/d1-density-long.md"
+sha256 = "9999bb6ce4ba913a65a04aca9d76f53c43c0ea524c07aa26229443fde4bdf371"   # A1 + full writing-density instruction
+
+[[variants]]
+id = "d2-density-short"
+claude_md = "variants/d2-density-short.md"
+sha256 = "22e6ed46682dfa2b4af2e2f008bd98ee274599dc5977b66b90df35c935c79eb7"   # A1 + "Please remove all mannered prose."
+
+[[probes]]
+id = "entitlement-drift-mechanism"
+path = "probes/entitlement-drift-mechanism"
+tree_sha256 = "e39ffc538f81be29dbe240867dac4db8afdfc3fb0f02cf206887ed08f6602ac0"
+
+[[probes]]
+id = "retry-storm-interaction"
+path = "probes/retry-storm-interaction"
+tree_sha256 = "40cc208bae9510cdaa1653a362b5bdabd9c9de40e7926c5a5eed7980628cddce"
+
+[[probes]]
+id = "scheduler-ownership-tradeoff"
+path = "probes/scheduler-ownership-tradeoff"
+tree_sha256 = "565825ce7c6306e34875c7c48b9a263d06e9910b5bb42046a2c08a1cc239f79f"
+
+[[probes]]
+id = "tail-latency-narrowing"
+path = "probes/tail-latency-narrowing"
+tree_sha256 = "2749724305e8d609ee4bf8080ecb94d7409fc492ecb1de1ec4901d4ca494d440"
+
+[[probes]]
+id = "terms-of-art-explainer"
+path = "probes/terms-of-art-explainer"
+tree_sha256 = "b32059c221e55e26159553e5a0ff42271882aeb0f0b814aa3905045dc22556da"
+
+# protocol.md "Instruments": maxima are descriptive splits at A1's bakeoff 8
+# base-rate medians; the primary contrast reads the retained observations.
+[[measures]]
+id = "sentence-length"
+kind = "deterministic"
+grader = "max_mean_sentence_words"
+maximum = 18
+
+[[measures]]
+id = "paragraph-length"
+kind = "deterministic"
+grader = "max_mean_paragraph_words"
+maximum = 42
+
+[[measures]]
+id = "length-cap"
+kind = "deterministic"
+grader = "max_words"
+maximum = 1093               # 110% of A1 base-rate median 994
+
+[[measures]]
+id = "mannered-prose"
+kind = "judgmental"
+question = "Does the response contain mannered prose, as the rubric defines it?"
+rubric = "rubric-mannered-prose.md"
+rubric_sha256 = "2d0e565e06c14b03aab39df5a90c01fd57d86269f7a41a7a54b0c54be58734fe"
+
+[[measures]]
+id = "coverage"
+kind = "judgmental"
+question = "Does the response cover every required idea listed for its question?"
+rubric = "rubric-coverage.md"
+rubric_sha256 = "19caae8bef7cc16c0bba74a242bba7169814f0f58aa698c2d09d6aa8456bdf59"

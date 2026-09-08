@@ -1,0 +1,65 @@
+# Clause bakeoff 11 canary: throwaway claude-code/2 harness check, not campaign
+# evidence. Three trials: A1, DEP, M1 on top-words-feature. See protocol.md.
+
+schema = "clause-campaign/1"
+
+[campaign]
+id = "clause-bakeoff-11-canary"
+protocol = "protocol.md"
+protocol_sha256 = "3ba9dc67bd4fe58c5f893b384892add83c48d8d2b9b01339814ac96393090222"
+repetitions = 1
+
+[execution]
+adapter = "claude-code/2"
+network = true
+model = "claude-opus-5"
+effort = "high"
+binary = "~/.claude-eval-pins/bakeoff10/claude"
+binary_version = "2.1.258 (Claude Code)"
+binary_sha256 = "b63136194160791c27cfa7b0403060d85eb0752991625fde8c09f9acacb17c78"
+timeout_seconds = 1200
+workers = 3
+tools = ["Bash", "Read", "Edit", "Write", "Grep", "Glob"]
+permission_mode = "acceptEdits"
+allowed_tools = ["Bash(python3 *)"]
+max_budget_usd = 3.0
+python_interpreter = "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+python_version = "3.14.5"
+
+[[variants]]
+id = "a1-response-numbers"
+claude_md = "variants/a1-response-numbers.md"
+sha256 = "f70f86a92e9fa1b1a2161adb5c64e00cd069e16075086dd9ccf61d7b75b5b2cf"
+
+[[variants]]
+id = "dep-deployed-file"
+claude_md = "variants/dep-deployed-file.md"
+sha256 = "4b670ca87fe7c7428e6ab293b96e7c64771f210a171ddae774716598e351e84c"
+
+[[variants]]
+id = "m1-marker"
+claude_md = "variants/m1-marker.md"
+sha256 = "f7239bff572a93f2c3b49b3ff643b354b7f04cc8f991330dbeec91fddba8cd8d"
+
+[[probes]]
+id = "top-words-feature"
+path = "probes/top-words-feature"
+tree_sha256 = "9899ea39b6141a3ac3bea7e445a02e66a26765409448a35186b592a9b3b526da"
+
+[[measures]]
+id = "oracle-pass"
+kind = "deterministic"
+grader = "oracle_pass"
+
+[[measures]]
+id = "length-cap"
+kind = "deterministic"
+grader = "max_words"
+maximum = 300
+
+[[measures]]
+id = "canary-marker"
+kind = "judgmental"
+question = "Does the message end with the token ZQX-MARKER on its own line?"
+rubric = "rubric-canary.md"
+rubric_sha256 = "57e0ec3bd77abea077628d1634169ce9453a7206dc60da9818a0cba75bfa241d"

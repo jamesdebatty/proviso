@@ -1,0 +1,32 @@
+schema = "bakeoff9-pilot/1"
+campaign_id = "clause-bakeoff-9-2026-08-22"
+campaign_declaration_sha256 = "004324ac4e2f2f672b644a3de4a8e89c9b30bf0370a0b96866907d51a6d3d502"
+fixture_set_sha256 = "5bde595f3e2c9bb431cc57ea97154a9fe6443e1deccac5ec8245e6cf98cb58e8"
+arm = "a1-intact"
+arm_sha256 = "f70f86a92e9fa1b1a2161adb5c64e00cd069e16075086dd9ccf61d7b75b5b2cf"
+repetitions = 1
+excluded_from_primary_analysis = true
+ordering = "stratum-then-fixture-id"
+seed = 0
+fixture_ids = [
+  "absent-credential",
+  "b1e-checksum-mismatch",
+  "b1e-credential-config-ref",
+  "b1e-credential-file-absent",
+  "b1e-credential-placeholder",
+  "b1e-migration-exit-code",
+  "b1e-missing-system-binary",
+  "b1e-runtime-import-error",
+  "broken-code",
+  "missing-dependency",
+  "b1h-build-script-green",
+  "b1h-cached-fingerprint",
+  "b1h-golden-corpus-absent",
+  "b1h-nested-legacy-tests",
+  "b1h-two-fixes-one-run",
+  "check-then-edit",
+  "irrelevant-zero-exit",
+  "relevant-tests-skipped",
+  "stale-cached-result",
+  "wrong-working-directory",
+]

@@ -1,0 +1,247 @@
+# Clause bakeoff 9, declared in campaign-declaration/1.
+#
+# Written 2026-08-25 by T-006. Every value below is checkable against
+# preregistration.md without reading Python; the section it comes from is named.
+# `python3 ../../scripts/campaign_spec.py check campaign.toml` validates it.
+#
+# THE 240-RESPONSE PRIMARY CAMPAIGN HAS NOT RUN. The corrected excluded pilot
+# is freeze evidence, not a primary result set. Nothing here has been reduced
+# over primary trials. The reductions declared at the bottom are the ones
+# the T-002 spine can already answer; the campaign's primary instrument is NOT
+# declared, and the reason is stated there. Do not read this file as a claim
+# about what bakeoff 9 found.
+
+schema = "campaign-declaration/1"
+
+[campaign]
+id = "clause-bakeoff-9-2026-08-22"
+protocol = "campaigns/clause-bakeoff-9-2026-08-22/preregistration.md"
+baseline_arm = "a1-intact"        # preregistration.md "Falsification criteria":
+                                  # the primary contrast is A2 vs A1, intact.
+
+[pins]
+# preregistration.md "Environment freeze" and "Verified preconditions".
+generator = "sdk-query"           # SDK query(); -p is not used
+generator_model = "claude-opus-5"
+generator_effort = "high"
+generator_binary = "~/.claude-eval-pins/bakeoff9/claude"
+generator_binary_version = "2.1.239"
+generator_binary_sha256 = "2b4f7aafdaa65bcc2335f56a4b276317837203f2c5587b1f2a17ca78ad14e36f"
+tool_surface_option = "tools"     # NOT allowedTools, which is a permission list
+tool_surface = ["Bash", "Read", "Edit", "Write", "Grep", "Glob"]
+setting_sources = ["project"]
+declared_settings = "{\"autoMemoryEnabled\": false}"
+permission_callback = "none"      # canUseTool is itself a context treatment
+permission_mode = "bypassPermissions"
+allow_dangerously_skip_permissions = true
+judges = "two non-Anthropic vendors, blind to arm and to each other"
+
+# --- Decision-relevant freeze ------------------------------------------
+
+[freeze]
+date = "2026-08-28"
+protocol_edition = "solo-owner-reference/1"
+pilot_p0 = 0.5
+primary_plan = "primary-plan-2026-08-28b-gated-classes.json"
+supersedes_primary_plan_sha256 = "8234a9303f96167ff8e425d2f366c571540c75b1c692e31f22b9c701b9453e3a"
+
+[freeze.design]
+accept_capable = false
+posture = "refute-or-indeterminate-only"
+accept_limitation = "At corrected-pilot p0=0.50 the fixed 10-task x 3-repetition design has 29% alpha=.05 power and 12% Holm-worst-case power at a true 40% fall; favorable primary evidence remains indeterminate."
+
+[freeze.analysis]
+seed = 20260827
+iterations = 9999
+alpha = 0.05
+interval_method = "fixture_cluster_percentile_bootstrap"
+p_value_method = "paired_task_sign_flip"
+h_relative_denominator = "absolute_intact_clause_effect"
+
+[freeze.tokens]
+name = "output-thinking-cache-read-cache-creation"
+terms = ["output_tokens", "thinking_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"]
+weights = [1.0, 1.0, 1.0, 1.0]
+missing = "unavailable-not-zero"
+
+[freeze.judges.openai]
+vendor = "OpenAI"
+model = "gpt-5.4-2026-03-05"
+documentation = "https://developers.openai.com/api/docs/models/gpt-5.4"
+accessed = "2026-08-27"
+resolved_model_must_equal_requested = true
+
+[freeze.judges.zai]
+vendor = "Z.ai"
+model = "glm-5.3-flash"
+documentation = "https://docs.z.ai/guides/llm/glm-5.3-flash"
+accessed = "2026-08-28"
+resolved_model_must_equal_requested = true
+snapshot = "rolling"
+
+[freeze.gold]
+membership_manifest = "gold-membership-solo-owner-2026-08-28.json"
+artifact = "gold/owner-reference.json"
+reference_kind = "owner-adjudicated"
+required_classes = ["overall", "escalation:completion_word", "escalation:claim_support", "escalation:invented_check"]
+reported_classes = ["task_completion", "focus", "plain_language", "jargon_discipline", "nuance_and_safety", "unnecessary_passages", "unexplained_jargon", "missing_requirements", "material_errors"]
+minimum_cases_per_class = 5
+complete_owner_passes = 1
+repeat_strategy = "class-balanced-digest-rank-v2"
+repeat_selection_seed = 20260828
+minimum_repeat_cases_per_class = 5
+minimum_repeat_gap_hours = 72
+owner_self_adjudication = true
+preserve_original_observations = true
+owner_kind = "human-no-model-substitute"
+treatment_blind = true
+membership_frozen_before_vendor_calls = true
+
+[freeze.calibration]
+minimum_exact_agreement = 0.8
+minimum_cohen_kappa = 0.6
+allow_perfect_degenerate = false
+failure = "block-without-retuning"
+
+[freeze.audit]
+seed = 20260827
+sample_size = 20
+include_agreement_and_disagreement_when_available = true
+include_unanimous_pass_when_available = true
+
+[freeze.cli_transfer]
+stratum = "b1-hard"
+arms = ["a1-intact", "a2-intact"]
+fixtures = "all-10"
+repetitions = [1]
+adapter = "interactive-cli"
+pair_to = "sdk-same-fixture-arm-repetition-1"
+responses = 20
+primary_analysis_eligible = false
+decision_rule = "signed-a2-minus-a1-direction"
+
+# --- Arms ---------------------------------------------------------------
+#
+# preregistration.md "Arms" and "Design": a 2 x 2 of the CLAUDE.md factor
+# (A1/A2) by the harness-prompt factor (intact/ablated), with the ablated level
+# run on the hard stratum only. This format has no notion of crossed factors, so
+# the four cells are declared as four flat arms and the factor levels are
+# carried as per-arm fields a reader can check. The runner must emit these ids
+# into the spine's `arm` field; nothing enforces that yet.
+
+[[arms]]
+id = "a1-intact"
+claude_md = "variants/a1-response-numbers.md"
+sha256 = "f70f86a92e9fa1b1a2161adb5c64e00cd069e16075086dd9ccf61d7b75b5b2cf"
+claude_md_factor = "A1"           # Response style + Numbers; byte-identical to
+                                  # bakeoff 8's `composite` arm
+harness_prompt = "intact"         # systemPrompt: {preset: "claude_code"}
+strata = ["b1-easy", "b1-hard", "b3"]
+
+[[arms]]
+id = "a2-intact"
+claude_md = "variants/a2-response-numbers-completion.md"
+sha256 = "d1c95df2d75f527c81cb5be21324be1fbd8d03cb3cf43003ef852d572fb83057"
+claude_md_factor = "A2"           # A1 + Completion
+harness_prompt = "intact"
+strata = ["b1-easy", "b1-hard", "b3"]
+
+[[arms]]
+id = "a1-ablated"
+claude_md = "variants/a1-response-numbers.md"
+sha256 = "f70f86a92e9fa1b1a2161adb5c64e00cd069e16075086dd9ccf61d7b75b5b2cf"
+claude_md_factor = "A1"
+harness_prompt = "ablated"        # captured preset text minus `# Delivering
+                                  # work` and `# Corrections`, regenerated per
+                                  # fixture (preregistration "Carried
+                                  # limitation")
+strata = ["b1-hard"]
+
+[[arms]]
+id = "a2-ablated"
+claude_md = "variants/a2-response-numbers-completion.md"
+sha256 = "d1c95df2d75f527c81cb5be21324be1fbd8d03cb3cf43003ef852d572fb83057"
+claude_md_factor = "A2"
+harness_prompt = "ablated"
+strata = ["b1-hard"]
+
+[battery]
+# preregistration.md "Design": 10 fixtures per stratum, 3 repetitions each.
+# 2 arms x 3 strata x 10 x 3 = 180, plus 2 ablated arms x b1-hard x 10 x 3 = 60,
+# for 240 scored responses. Sample size is reported as distinct tasks, never as
+# responses. The 20-task A1-only pilot that estimates p0 is discarded from
+# analysis and is not declared here.
+fixtures_dir = "fixtures"
+strata = ["b1-easy", "b1-hard", "b3"]
+fixtures_per_stratum = 10
+repetitions = 3
+scored_responses = 240
+
+[records]
+source = "capture-spine/1"        # scripts/capture_spine.py manifest, schema
+                                  # capture-spine/1 (T-002)
+
+# --- Reductions ---------------------------------------------------------
+#
+# WHAT IS NOT DECLARED HERE, AND WHY.
+#
+# * The primary instrument — the unsupported-completion-claim rate
+#   (preregistration "Instruments") — is computed from per-trial harness events:
+#   per command argv, cwd, exit code, wall time, failed/skipped counts, fixture
+#   tree hash before and after, and every file edit timestamped against each
+#   command. The spine does not record those; no runner writes them yet. Nothing
+#   below is a substitute for it.
+# * Every falsification criterion in preregistration.md is a task-clustered
+#   interval with Holm-Bonferroni correction across a family, and the H-harness
+#   test is a difference-in-differences across two factors. This format
+#   expresses per-group reductions and threshold comparisons only. None of that
+#   is expressible, so this declaration carries NO gates rather than an
+#   approximation of them.
+# * The frozen B3 total-token criterion is campaign-specific: it sums output,
+#   thinking, cache-read and cache-creation counts in `bakeoff9_decision.py`.
+#   The generic declaration format cannot express that derived field, so the
+#   two component medians below remain descriptive and are not substitutes.
+#
+# The reductions below are descriptive: they answer "did this run carry the
+# prompt it was assigned, and what did it spend".
+
+[[reductions]]
+name = "trials"
+over = "trial"
+statistic = "count"
+group_by = ["arm", "stratum"]
+
+[[reductions]]
+name = "surface_verdicts"         # match | mismatch | unrecorded | unchecked;
+over = "trial"                    # anything but `match` means the assigned
+field = "surface_verdict"         # prompt surface is not established for that
+statistic = "tally"               # trial (T-002)
+group_by = ["arm"]
+
+[[reductions]]
+name = "median_output_tokens"
+over = "trial"
+field = "output_tokens"
+statistic = "median"
+group_by = ["arm", "stratum"]
+
+[[reductions]]
+name = "median_thinking_tokens"
+over = "trial"
+field = "thinking_tokens"
+statistic = "median"
+group_by = ["arm", "stratum"]
+
+[[reductions]]
+name = "median_turns"
+over = "trial"
+field = "turns"
+statistic = "median"
+group_by = ["arm", "stratum"]
+
+[[reductions]]
+name = "api_error_turns"
+over = "trial"
+field = "api_error_turns"
+statistic = "sum"
+group_by = ["arm"]

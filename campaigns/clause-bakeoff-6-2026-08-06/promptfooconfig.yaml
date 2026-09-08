@@ -1,0 +1,22 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 6 (guarded-subtractive v2 holdout vs control)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: guarded-subtractive-v2
+    config:
+      arm: guarded-subtractive-v2
+      variant_file: variants/guarded-subtractive-v2.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

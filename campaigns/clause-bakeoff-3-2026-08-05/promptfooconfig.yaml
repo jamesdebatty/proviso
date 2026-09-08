@@ -1,0 +1,29 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 3 (positive recipe vs control vs complete recipe)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: positive-recipe
+    config:
+      arm: positive-recipe
+      variant_file: variants/positive-recipe.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: complete-recipe
+    config:
+      arm: complete-recipe
+      variant_file: variants/complete-recipe.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

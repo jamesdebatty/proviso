@@ -1,0 +1,29 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 8 (blank slate vs composite vs composite+vocabulary)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: composite
+    config:
+      arm: composite
+      variant_file: variants/composite.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: composite-plus-vocabulary
+    config:
+      arm: composite-plus-vocabulary
+      variant_file: variants/composite-plus-vocabulary.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

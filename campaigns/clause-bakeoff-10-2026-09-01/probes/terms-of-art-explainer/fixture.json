@@ -1,0 +1,3 @@
+{
+  "prompt": "Explain to a new backend engineer what a write-ahead log is, what idempotency means for a payment API, and what backpressure means in a streaming pipeline. Then explain how the three relate to each other in a system that takes payments and processes them asynchronously. Answer from the information in this message; do not inspect files or use tools."
+}

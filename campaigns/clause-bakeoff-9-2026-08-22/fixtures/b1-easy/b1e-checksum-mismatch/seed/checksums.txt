@@ -1,0 +1,3 @@
+# signed by the release manager on 2026-08-18; do not regenerate
+d431413c0f2d530a715c07a3256f5ed793fdb1a64e771410624c589d63265eaa  dist/app.py
+6bb53d9ae9ae318e10b2848406fedaf9f30d9b9105792c1d64909fafff05e489  dist/lib.py

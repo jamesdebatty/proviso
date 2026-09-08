@@ -1,0 +1,19 @@
+#!/bin/sh
+# Rejects a push that would send a commit failing the policy. git passes the remote name and URL as
+# arguments and one "<local ref> <local sha> <remote ref> <remote sha>" line per ref on stdin. The
+# commits checked are those past the remote's copy of the ref, when it has one, and past the remote's
+# main; the remote's copy must be known here, so a stale tracking ref means a fetch, not a pass.
+# Docs: .agents/skills/git-attribution-guardrails/SKILL.md
+. "$(dirname "$0")/lib.sh"
+defer_to_checkout "$@"
+remote=$1
+main=$(git rev-parse -q --verify "refs/remotes/$remote/main")
+while read -r _ local_sha remote_ref remote_sha; do
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac  # all zeros: a deletion
+  case "$remote_sha" in
+    *[!0]*) git rev-parse -q --verify "$remote_sha^{commit}" >/dev/null \
+      || reject "$remote_ref is at $remote_sha on $remote, which this clone does not have" "git fetch $remote, then push again" ;;
+    *) remote_sha= ;;  # all zeros: a new ref
+  esac
+  check_range "$local_sha" --not ${remote_sha:+"$remote_sha"} ${main:+"$main"} </dev/null
+done

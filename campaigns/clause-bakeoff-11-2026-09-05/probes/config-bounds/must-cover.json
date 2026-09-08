@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "which checks were added, for which fields, and where",
+    "a fact from the work itself: where the unhelpful failure surfaced before, namely runner.plan dividing by workers or stepping a range by zero",
+    "the call made on the boundary the request left open, such as whether a zero timeout or a non-integer value is rejected, stated as a decision rather than a question",
+    "that the suite was run and its result",
+    "whether tests for the new checks were added"
+  ]
+}

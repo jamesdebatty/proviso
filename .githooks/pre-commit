@@ -1,0 +1,7 @@
+#!/bin/sh
+# Rejects a commit whose author or committer is not the hardcoded identity.
+# Docs: .agents/skills/git-attribution-guardrails/SKILL.md
+. "$(dirname "$0")/lib.sh"
+defer_to_checkout "$@"
+check_ident AUTHOR
+check_ident COMMITTER

@@ -1,0 +1,12 @@
+{
+  "prompt": "An event stamped `2026-03-04 23:59:59` shows up under `2026-03-05 00:00` in the hourly report produced by `rollup/hourly.py`. Why does that happen, and is it a bug?",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

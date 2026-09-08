@@ -1,0 +1,49 @@
+{
+  "label": "capture-control-preset-2.1.239-opus5",
+  "cc_version_block": "x-anthropic-billing-header: cc_version=2.1.239.5e2; cc_entrypoint=sdk-ts;",
+  "system_blocks": [
+    {
+      "index": 0,
+      "chars": 73,
+      "sha256": "b05151f633b3060871590cc9acceab8a272926bfc50d44e807d56e26ca1254c9",
+      "cache_control": false
+    },
+    {
+      "index": 1,
+      "chars": 62,
+      "sha256": "0d7062851dd7bd7e66d4be4f12ac4951e3d2f587ec408295333a49963bd3f6b7",
+      "cache_control": true
+    },
+    {
+      "index": 2,
+      "chars": 7142,
+      "sha256": "db58713b24a5fd31c05f821d79697dcc9129a4f165533769ed2e968f25bf5ad6",
+      "cache_control": true
+    }
+  ],
+  "system_joined_sha256": "7f595f1cfb392cec5c47efba15c8fcadaf3d85b6076ea97d444c383bbbd5a8d3",
+  "tools": [
+    "Bash",
+    "Edit",
+    "Glob",
+    "Grep",
+    "Read",
+    "Write"
+  ],
+  "tools_sha256": "5dbd88f2f94c179c9f78ff5fbf08670e6cf75cd88d20cbf5ad36f50c98c188da",
+  "messages": [
+    {
+      "role": "user",
+      "chars": 447,
+      "sha256": "d1e4b76278047d8bf20a377b90781a7e77663bda238505e79ccfb1cbe78fadee"
+    },
+    {
+      "role": "system",
+      "chars": 82,
+      "sha256": "77d19e3c9b688fe9fee789cc8d2a925d5ddb38610b4cab797e2ac58f1a5afd2a"
+    }
+  ],
+  "model": "claude-opus-5",
+  "max_tokens": 64000,
+  "retention_note": "messages[0] user-role <system-reminder> payload not retained (CLAUDE.md/gitStatus); metadata, headers, session and device identifiers omitted."
+}

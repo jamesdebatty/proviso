@@ -1,0 +1,12 @@
+{
+  "prompt": "`next_monthly` in `recur/monthly.py` crashes when the next month is shorter than the start day, so a charge that starts on January 31 never gets a February date, and `schedule` and `python3 -m recur` fail with it. A monthly recurrence that starts on the 29th, 30th, or 31st should fall on the last day of any shorter month. Fix it and make the test suite pass.",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

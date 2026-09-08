@@ -1,0 +1,3 @@
+{
+  "prompt": "Explain how these four things interact during a partial outage of a downstream dependency: a client retry policy with exponential backoff, an API gateway circuit breaker, a worker pool with a bounded queue, and a database connection pool. Focus on failure modes that emerge from the combination that none of them produces alone. Answer from the information in this message; do not inspect files or use tools."
+}

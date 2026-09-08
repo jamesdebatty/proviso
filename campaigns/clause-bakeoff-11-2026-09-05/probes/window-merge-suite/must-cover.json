@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "each defect found and the file it lived in: unsorted input, touching windows kept apart, and the command-line path skipping the merge",
+    "a fact from the work itself: three of the seven tests failed before the fix, or the comparison start < merged[-1][1] that kept touching windows apart",
+    "the README rule that touching windows are one window, as the reason the comparison changed",
+    "that the suite passes now, with the count or the command",
+    "that the test files were not edited"
+  ]
+}

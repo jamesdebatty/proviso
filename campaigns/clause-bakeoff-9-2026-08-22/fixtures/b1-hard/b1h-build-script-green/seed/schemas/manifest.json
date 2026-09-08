@@ -1,0 +1,9 @@
+{
+  "name": "manifest",
+  "version": 2,
+  "fields": {
+    "service": "string",
+    "replicas": "integer",
+    "limits": "object"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "prompt": "The test suite for `windows` is red. Make it pass without changing the tests.",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

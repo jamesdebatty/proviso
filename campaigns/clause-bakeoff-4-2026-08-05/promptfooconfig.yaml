@@ -1,0 +1,36 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 4 (budgeted and structured recipes vs positive recipe vs control)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: positive-recipe
+    config:
+      arm: positive-recipe
+      variant_file: variants/positive-recipe.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: budgeted-recipe
+    config:
+      arm: budgeted-recipe
+      variant_file: variants/budgeted-recipe.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: structured-recipe
+    config:
+      arm: structured-recipe
+      variant_file: variants/structured-recipe.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

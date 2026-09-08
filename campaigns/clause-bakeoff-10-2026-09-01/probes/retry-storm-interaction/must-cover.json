@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "retries multiply load on an already degraded dependency, so backoff and jitter matter and synchronized retries can produce a coordinated load spike",
+    "a circuit breaker changes the failure shape, failing fast and shedding load, but can also mask the dependency's recovery or trip on the wrong signal",
+    "the bounded queue means work is dropped or callers block once it fills, and queued work can be stale or already abandoned by the client by the time it runs",
+    "connection pool exhaustion couples unrelated request paths, so one slow dependency can starve requests that do not need it",
+    "an emergent interaction, such as breaker state and retry timing amplifying each other, or queued retries arriving in a burst when the breaker closes"
+  ]
+}

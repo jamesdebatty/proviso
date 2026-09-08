@@ -1,0 +1,12 @@
+{
+  "prompt": "`load_config` in `jobs/config.py` accepts values like negative retries or a zero worker count, and the runner fails later with an unhelpful traceback. Make `load_config` raise `ValueError` that names the offending field when `retries`, `timeout_seconds`, or `workers` has a value that cannot work.",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

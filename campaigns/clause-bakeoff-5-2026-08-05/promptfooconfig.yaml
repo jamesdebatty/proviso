@@ -1,0 +1,36 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 5 (subtractive variants vs budgeted recipe vs control)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: subtractive
+    config:
+      arm: subtractive
+      variant_file: variants/subtractive.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: budgeted-recipe
+    config:
+      arm: budgeted-recipe
+      variant_file: variants/budgeted-recipe.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: guarded-subtractive
+    config:
+      arm: guarded-subtractive
+      variant_file: variants/guarded-subtractive.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

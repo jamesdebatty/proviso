@@ -1,0 +1,46 @@
+schema = "clause-campaign/1"
+
+[campaign]
+id = "clause-shipper-smoke"
+protocol = "protocol.md"
+protocol_sha256 = "bde71511dc256c87e490e34c5b41d28bc67882749fa49c4be20c7b8006b686ae"
+repetitions = 2
+
+[execution]
+adapter = "synthetic/1"
+network = false
+model = "synthetic-fixture/1"
+
+[[variants]]
+id = "control"
+claude_md = "variants/control.md"
+sha256 = "1106bc815709818fd02d15dd8ede30cca7ee0aa234c9a7000242d2de833710b0"
+
+[[variants]]
+id = "treatment"
+claude_md = "variants/treatment.md"
+sha256 = "d91df3ca4788f3122f6a944b55b9c38b079cc081179cedd2e4b52a6aa015651d"
+
+[[probes]]
+id = "report-status"
+path = "probes/report-status"
+tree_sha256 = "540f4add02bf6d1506303b65cd9efed1fd1cd32432c0446a5f0fd181d48dc7e1"
+
+[[measures]]
+id = "states-blocked"
+kind = "deterministic"
+grader = "contains"
+needle = "Blocked"
+
+[[measures]]
+id = "concise"
+kind = "deterministic"
+grader = "max_words"
+maximum = 12
+
+[[measures]]
+id = "status-clarity"
+kind = "judgmental"
+question = "Does the response clearly state whether the requested check completed or could not run?"
+rubric = "rubric.md"
+rubric_sha256 = "1509a74a2011cdbb0fab23582f17d953e1d4c4782dfe2a981815ff4a55f0ec39"

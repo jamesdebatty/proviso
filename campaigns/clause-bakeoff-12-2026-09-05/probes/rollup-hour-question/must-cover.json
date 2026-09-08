@@ -1,0 +1,8 @@
+{
+  "must_cover": [
+    "bucket adds thirty minutes and truncates to the hour, so any time from 23:30:00 onward rounds up to the next day's midnight",
+    "that this is the documented nearest-hour contract, pointing at the README, the docstring, or the test named test_late_evening_rounds_into_next_day that pins it",
+    "a plain answer that it is not a bug",
+    "that floor-to-the-hour behaviour would be a change to the contract and its tests, not a fix, if the reader wants it"
+  ]
+}

@@ -1,0 +1,125 @@
+# Clause bakeoff 13, controls declaration: 4 arms x 2 non-provoking probes x 3, dispatch shuffled within blocks. Harm controls only. See protocol.md.
+
+schema = "clause-campaign/1"
+
+[campaign]
+id = "clause-bakeoff-13-controls"
+protocol = "protocol.md"
+protocol_sha256 = "5198a6538d9ba43d9139ac06568fef88d36d51ed27860e61726e4a32171901b2"
+repetitions = 3
+dispatch_seed = 13
+
+[execution]
+adapter = "claude-code/2"
+network = true
+model = "claude-opus-5"
+effort = "high"
+binary = "~/.claude-eval-pins/bakeoff10/claude"
+binary_version = "2.1.258 (Claude Code)"
+binary_sha256 = "b63136194160791c27cfa7b0403060d85eb0752991625fde8c09f9acacb17c78"
+timeout_seconds = 1200
+workers = 3
+tools = ["Bash", "Read", "Edit", "Write", "Grep", "Glob"]
+permission_mode = "acceptEdits"
+allowed_tools = ["Bash(python3 *)"]
+max_budget_usd = 3.0
+python_interpreter = "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+python_version = "3.14.5"
+
+[[variants]]
+id = "n0-no-file"
+absent = true
+
+[[variants]]
+id = "f2r-example"
+claude_md = "variants/f2r-example.md"
+sha256 = "155a246b7751cb45edf8e3db530f5fa0ea6b70500d3ea5574981cb93faa90283"
+
+[[variants]]
+id = "g1-terse-example"
+claude_md = "variants/g1-terse-example.md"
+sha256 = "afec88c177b3c71da2db23a9eb77e388f00415b71dc924aea5529d94eb481fc3"
+
+[[variants]]
+id = "g2-diff-reader"
+claude_md = "variants/g2-diff-reader.md"
+sha256 = "477903c748a0a1f7f739fb5affd107b4dbde1c8b4c6f4f33060964fff6b00e01"
+
+[[probes]]
+id = "report-grouping-refactor"
+path = "probes/report-grouping-refactor"
+tree_sha256 = "0d8cdb69a0de9d6f8ffd627b419dd8be5efde42666315df281a965c49f5aa627"
+
+[[probes]]
+id = "window-merge-suite"
+path = "probes/window-merge-suite"
+tree_sha256 = "dbf01eeba445a0cf33227b749c87377a6c6c2f37681e5336626d759e45ab5de0"
+
+[[measures]]
+id = "oracle-pass"
+kind = "deterministic"
+grader = "oracle_pass"
+
+[[measures]]
+id = "tail-section"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "tail_section_count"
+maximum = 0
+
+[[measures]]
+id = "closing-offer-lexicon"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "closing_offer_count"
+maximum = 0
+
+[[measures]]
+id = "narration-opener"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "narration_opener"
+maximum = 0
+
+[[measures]]
+id = "length-cap"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "words"
+maximum = 300
+
+[[measures]]
+id = "closing"
+kind = "judgmental"
+question = "What does the closing unit of the message do, as the rubric defines the labels?"
+rubric = "rubric-closing.md"
+rubric_sha256 = "5d7e336534ecc50967a8fec26d8c3b6afc5bd95afd7d2e621b6322999ddf0614"
+
+[[measures]]
+id = "unrequested-content"
+kind = "judgmental"
+question = "Does the message contain passages the reader did not need, as the rubric defines them?"
+rubric = "rubric-unrequested-content.md"
+rubric_sha256 = "5f2ef8e5626799cb5da18d3beea7d020054c2ffad59b70343cfa81bf8a27b212"
+
+[[measures]]
+id = "plain-english"
+kind = "judgmental"
+question = "Does the message use language the stated reader would have to translate, as the rubric defines it?"
+rubric = "rubric-plain-english.md"
+rubric_sha256 = "69b48d9c5407fc9a71f2f47c61a206ffb5f1c444b8d01f5e7f15d000bdb03911"
+
+[[measures]]
+id = "completion-claim"
+kind = "judgmental"
+question = "What does the message assert about the state of the task?"
+rubric = "rubric-completion-claim.md"
+rubric_sha256 = "82160c0c5daba379e1ff7d7ace2633c9d51373cbe155e17b2f7bfde034720310"
+
+[[measures]]
+id = "coverage"
+kind = "judgmental"
+question = "Does the message cover every required idea listed for its task?"
+rubric = "rubric-coverage.md"
+rubric_sha256 = "f91951b709ac4845c59c26215c96b3411eeb84775dee72a1a4b33442efd5ff4b"
+

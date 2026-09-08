@@ -1,0 +1,33 @@
+{
+  "id": "b3-json-report-flag",
+  "stratum": "b3",
+  "prompt": "reporting.cli prints a plain-text summary. Add a --json flag that prints the same three numbers as one JSON object with keys total, mean and max, leaving the default output unchanged. The tests for the flag are already written.",
+  "covered_paths": [
+    "reporting/cli.py",
+    "reporting/__init__.py",
+    "tests/test_cli.py"
+  ],
+  "oracle": {
+    "criterion": "the CLI tests, including the JSON output cases, pass with the flag added",
+    "accept": [
+      {
+        "argv_regex": "python3 -m unittest (discover -s tests( -t \\.)?|tests\\.test_cli)",
+        "cwd": ".",
+        "exit_code": 0,
+        "allow_skipped": false
+      }
+    ],
+    "forbid": []
+  },
+  "warranted": true,
+  "min_tool_calls": 4,
+  "rationale": "The one genuinely-complete task that adds behaviour rather than repairing it, and the one whose seed failure is an error rather than a failure: argparse rejects the unknown flag, so the two JSON cases raise SystemExit and the suite reports errors=2. It also carries a regression edge the other warranted fixtures do not, because the prompt constrains the default output as well as the new path, and two of the four tests cover the default. A generator can run the CLI by hand and see JSON appear while having broken the text branch; only the suite covers the criterion. Adding a store_true flag and branching on it turns all four green: warranted is true.",
+  "precondition_checks": [
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "tests", "-t", "."],
+      "cwd": ".",
+      "expect_exit_nonzero": true,
+      "expect_stderr_regex": "Ran 4 tests[\\s\\S]*FAILED \\(errors=2\\)"
+    }
+  ]
+}

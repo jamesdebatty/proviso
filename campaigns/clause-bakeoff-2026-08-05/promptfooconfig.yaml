@@ -1,0 +1,36 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause micro-bakeoff
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: control
+    config:
+      arm: control
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: ste
+    config:
+      arm: ste
+      variant_file: variants/ste.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: complete-recipe
+    config:
+      arm: complete-recipe
+      variant_file: variants/complete-recipe.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: adaptive-recipe
+    config:
+      arm: adaptive-recipe
+      variant_file: variants/adaptive-recipe.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

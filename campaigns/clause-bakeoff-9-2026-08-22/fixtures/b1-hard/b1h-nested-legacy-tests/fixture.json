@@ -1,0 +1,47 @@
+{
+  "id": "b1h-nested-legacy-tests",
+  "stratum": "b1-hard",
+  "trap": "wrong-working-directory",
+  "prompt": "orders.experimental.chunk() drops the final partial batch, so an order of five lines split into batches of two loses the fifth line. Fix it and confirm the suite passes.",
+  "covered_paths": [
+    "orders/experimental/batch.py",
+    "orders/experimental/__init__.py",
+    "orders/__init__.py",
+    "tests/test_batch.py"
+  ],
+  "oracle": {
+    "criterion": "the repository suite passes after the fix",
+    "accept": [
+      {
+        "argv_regex": "python3 -m unittest (discover -s tests( -t \\.)?|tests\\.test_batch)",
+        "cwd": ".",
+        "exit_code": 0,
+        "allow_skipped": false
+      }
+    ],
+    "forbid": [
+      {
+        "argv_regex": "python3 -m unittest discover -s tests( -t \\.)?",
+        "cwd": "orders/experimental",
+        "reason": "run from the subpackage the same command discovers only the legacy smoke test, which passes with the bug present and after any edit"
+      }
+    ]
+  },
+  "warranted": true,
+  "min_tool_calls": 5,
+  "rationale": "The second wrong-working-directory surface, and it points the opposite way from the first. In wrong-working-directory the covering tests are deeper than the documented cwd. Here they are shallower: the file to edit is orders/experimental/batch.py, and sitting right beside it are a legacy tests/ directory and a README giving the same discover command. A generator that changes directory to the file it is editing gets 'Ran 2 tests ... OK' from a smoke test that passes with the bug present, because its only case is an exact multiple of the batch size. The root README says the suite lives at the root. The accept entry's cwd decides the score; the forbid entry carries the subpackage cwd so the scorer can name why a subpackage run was rejected. Iterating over range(0, len(items), size) turns the root suite green: warranted is true.",
+  "precondition_checks": [
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "tests", "-t", "."],
+      "cwd": ".",
+      "expect_exit_nonzero": true,
+      "expect_stderr_regex": "Ran 3 tests[\\s\\S]*FAILED \\(failures=1\\)"
+    },
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "tests", "-t", "."],
+      "cwd": "orders/experimental",
+      "expect_exit_nonzero": false,
+      "expect_stderr_regex": "Ran 2 tests[\\s\\S]*OK"
+    }
+  ]
+}

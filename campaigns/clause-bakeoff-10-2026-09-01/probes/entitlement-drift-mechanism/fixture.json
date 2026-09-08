@@ -1,0 +1,3 @@
+{
+  "prompt": "Two services each keep their own copy of customer entitlements (which features a customer may use). Each updates its copy from its own inputs, and the copies have started to drift apart. There is no shared database and adding one is not an option this quarter. Design a mechanism to detect divergence and reconcile it, and explain how your mechanism behaves during a network partition between the two services. Answer from the information in this message; do not inspect files or use tools."
+}

@@ -1,0 +1,6 @@
+{
+  "name": "nightly-rollup",
+  "retries": 2,
+  "timeout_seconds": 120,
+  "workers": 4
+}

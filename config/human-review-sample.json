@@ -1,0 +1,12 @@
+{
+  "selection_method": "Frozen before the full campaign; six category-diverse pairs (20% of 30)",
+  "pairs": [
+    {"prompt_id": "direct-answer", "repetition": 2},
+    {"prompt_id": "log-diagnosis", "repetition": 1},
+    {"prompt_id": "code-review", "repetition": 3},
+    {"prompt_id": "safe-procedure", "repetition": 2},
+    {"prompt_id": "decision-summary", "repetition": 1},
+    {"prompt_id": "nuanced-risk", "repetition": 3}
+  ],
+  "mandatory_additions": "Review every pair with a reported material error or safety regression, even if it is not in the frozen sample."
+}

@@ -1,0 +1,8 @@
+{
+  "must_cover": [
+    "which checks were added, for which fields, and where",
+    "the call made on the boundary the request left open, such as whether a zero timeout or a non-integer value is rejected, stated as a decision rather than a question",
+    "that the suite was run and its result",
+    "whether tests for the new checks were added"
+  ]
+}

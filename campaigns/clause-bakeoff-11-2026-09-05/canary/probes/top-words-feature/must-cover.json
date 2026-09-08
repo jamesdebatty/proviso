@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "where the function was added and how ties are ordered",
+    "a fact from the work itself: that count_words matches runs of ASCII letters on lowercased text, so top_words inherits that tokenising",
+    "that tests were added, and which behaviours they exercise, such as ties, n larger than the vocabulary, or empty text",
+    "that the suite was run and its result",
+    "that count_words itself was left unchanged, or what was shared between the two"
+  ]
+}

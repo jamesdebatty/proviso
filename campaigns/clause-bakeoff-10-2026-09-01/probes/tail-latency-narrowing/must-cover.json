@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "establish whether the slow requests share a dimension, such as one host, one instance, one dependency, one customer, or one code path, before forming a theory",
+    "use per-request tracing or timing breakdown to find which segment of the request consumes the time rather than guessing at the layer",
+    "name plausible mechanisms for a rare, region-specific stall, such as connection establishment or DNS, a lock or queue wait, garbage collection or other pauses, a retry with a long timeout, or cross-region network behavior",
+    "note that the region restriction is evidence about topology or configuration, such as a dependency, network path, or capacity that differs in that region",
+    "state what would confirm or eliminate the leading hypothesis rather than declaring a root cause"
+  ]
+}

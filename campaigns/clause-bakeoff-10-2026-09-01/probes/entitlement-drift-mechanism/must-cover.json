@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "a way to detect divergence, such as periodic comparison of a digest, checksum, or versioned snapshot of each side's state",
+    "a reconciliation rule that decides which copy wins, such as a per-record authoritative owner, last-writer-wins with a clock, or an explicit merge policy, and acknowledgement that the choice has consequences",
+    "behavior during a partition, including that reconciliation must pause or degrade rather than converge on stale data, and what each side does while isolated",
+    "a safety concern such as reconciliation flapping, oscillation between the copies, or silently overwriting a legitimate local change",
+    "how an operator would observe whether the mechanism is working, such as a drift metric or an alert on divergence age"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "must_cover": [
+    "the cause: the start day is copied into a month that does not have that many days, so building the date raises",
+    "what was changed and where, naming recur/monthly.py and the clamp to the target month's last day",
+    "that the test suite was run after the fix and passed, with the command or the test count",
+    "whether the command-line entry point was also exercised, or that it was not"
+  ]
+}

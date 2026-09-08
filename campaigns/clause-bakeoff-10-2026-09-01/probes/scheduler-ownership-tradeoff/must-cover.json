@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "the central scheduler is a shared failure and contention point, while per-service schedulers spread that risk but multiply the operational surface",
+    "duplicate or missed runs are the core correctness concern in both designs, so leader election, locking, or idempotent jobs are needed either way",
+    "visibility and consistency differences, such as one place to see and audit all schedules versus per-team autonomy and drift in conventions",
+    "migration and organizational cost, including that 30 teams adopting a central dependency is a coordination problem, not only a technical one",
+    "a recommendation that names the conditions under which it holds rather than presenting one design as universally correct"
+  ]
+}

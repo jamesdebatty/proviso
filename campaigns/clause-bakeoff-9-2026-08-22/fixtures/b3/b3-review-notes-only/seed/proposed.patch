@@ -1,0 +1,36 @@
+--- a/cache/store.py
++++ b/cache/store.py
+@@ -2,16 +2,30 @@
+ 
+ 
+ class Cache:
+-    """Keys to values, with no bound on size."""
++    """Keys to values, with an LRU bound on size."""
+ 
+-    def __init__(self):
++    def __init__(self, max_items=1000):
+         self._items = {}
++        self.max_items = max_items
++        self.hits = 0
++        self.misses = 0
+ 
+     def get(self, key):
+-        return self._items.get(key)
++        value = self._items.get(key)
++        if value is None:
++            self.misses += 1
++        else:
++            self.hits += 1
++        return value
+ 
+     def put(self, key, value):
+         self._items[key] = value
++        while len(self._items) > self.max_items:
++            oldest = next(iter(self._items))
++            del self._items[oldest]
+ 
++    def hit_rate(self):
++        return self.hits / (self.hits + self.misses)
++
+     def __len__(self):
+         return len(self._items)

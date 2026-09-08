@@ -1,0 +1,9 @@
+{
+  "must_cover": [
+    "define a write-ahead log as recording an intended change durably before applying it, so the system can recover or replay after a crash",
+    "define idempotency as the property that repeating the same request produces the same result without duplicating the effect, and connect it to retries and duplicate charges",
+    "define backpressure as a consumer signalling or forcing a producer to slow down when it cannot keep up, rather than dropping or unboundedly queueing work",
+    "connect the three, for example that durable logging plus idempotent processing makes retry-on-failure safe, while backpressure keeps the queue between them from growing without bound",
+    "use the standard names for these concepts rather than avoiding them"
+  ]
+}

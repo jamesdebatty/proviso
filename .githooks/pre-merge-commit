@@ -1,0 +1,8 @@
+#!/bin/sh
+# Rejects an automatic merge commit whose author or committer is not the hardcoded identity
+# (pre-commit does not run for `git merge`).
+# Docs: .agents/skills/git-attribution-guardrails/SKILL.md
+. "$(dirname "$0")/lib.sh"
+defer_to_checkout "$@"
+check_ident AUTHOR
+check_ident COMMITTER

@@ -1,0 +1,8 @@
+#!/bin/sh
+# Usage: .githooks/audit <revision-range>    e.g. .githooks/audit main..HEAD
+# Exit 0 when every commit in the range carries the hardcoded identity and no attribution line.
+# Docs: .agents/skills/git-attribution-guardrails/SKILL.md
+. "$(dirname "$0")/lib.sh"
+[ $# -eq 1 ] || { echo "usage: $0 <revision-range>" >&2; exit 2; }
+check_range "$1"
+printf 'attribution-guardrails: %s clean (%s commits)\n' "$1" "$(git rev-list --count "$1")"

@@ -1,0 +1,23 @@
+$schema: https://promptfoo.dev/config-schema.json
+description: Opus 5 High clause bakeoff 7 (v2 + no-invented-numbers vs v2-only)
+
+prompts:
+  - "{{task}}"
+
+providers:
+  - id: file://provider.py
+    label: v2-only
+    config:
+      arm: v2-only
+      variant_file: variants/guarded-subtractive-v2.md
+      workers: 1
+      timeout: 600000
+  - id: file://provider.py
+    label: v2-plus-numbers
+    config:
+      arm: v2-plus-numbers
+      variant_file: variants/v2-plus-numbers.md
+      workers: 1
+      timeout: 600000
+
+tests: file://tests.py:generate_tests

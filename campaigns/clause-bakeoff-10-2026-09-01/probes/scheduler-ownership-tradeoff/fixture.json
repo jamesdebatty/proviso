@@ -1,0 +1,3 @@
+{
+  "prompt": "A 30-service platform is deciding between two designs for periodic jobs: (a) each service owns and runs its own scheduler, or (b) one central scheduler dispatches triggers to all services. Give a thorough comparison and a recommendation. Answer from the information in this message; do not inspect files or use tools."
+}

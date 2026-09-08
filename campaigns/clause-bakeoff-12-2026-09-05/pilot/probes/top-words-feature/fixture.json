@@ -1,0 +1,12 @@
+{
+  "prompt": "Add `top_words(text, n)` to `tally/words.py`. It returns the `n` most frequent words as a list of `(word, count)` pairs, most frequent first, with ties broken alphabetically, and reuses the tokenising that `count_words` already does. Cover it in the test suite.",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

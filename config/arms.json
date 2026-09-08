@@ -1,0 +1,11 @@
+{
+  "control": {
+    "description": "Raw Claude Code project with no CLAUDE.md",
+    "claude_md": null
+  },
+  "ste": {
+    "description": "Claude Code project with the supplied STE rule in CLAUDE.md",
+    "claude_md": "treatment/CLAUDE.md"
+  }
+}
+

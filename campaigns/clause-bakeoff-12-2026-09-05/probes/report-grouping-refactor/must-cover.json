@@ -1,0 +1,7 @@
+{
+  "must_cover": [
+    "what group_by_day takes and returns, and what each of the three callers still does itself",
+    "that the three functions' output was confirmed unchanged, and how, for example by the existing golden tests passing",
+    "any way the original loops differed, such as the column each read, and how that difference was kept"
+  ]
+}

@@ -1,0 +1,25 @@
+# Python environments and build artifacts
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+node_modules/
+
+# macOS
+.DS_Store
+
+# Project-local skill installs are symlinks into the maintainer's own clones
+# elsewhere on disk. Committing them yields broken links on any other machine.
+# .claude/SKILLS-PROVENANCE.md is the reproducible instruction -- it records
+# every pack's upstream source and what was deliberately not installed -- so
+# that is versioned and the symlinks are not.
+.claude/skills/
+.claude/agents/
+.claude/commands/
+
+# Local model snapshots and scratch — download, do not commit
+local/
+
+# A pinned commit identity is personal; keep it out of the tree.
+.githooks/identity.local.sh

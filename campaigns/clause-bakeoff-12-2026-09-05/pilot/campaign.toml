@@ -1,0 +1,98 @@
+# Clause bakeoff 12 pilot: eight raw no-CLAUDE.md trials on the four provoking
+# probes, deciding P0 before the campaign. See protocol.md. Not campaign evidence.
+
+schema = "clause-campaign/1"
+
+[campaign]
+id = "clause-bakeoff-12-pilot"
+protocol = "protocol.md"
+protocol_sha256 = "4a33f758447f37f8c7eef5b628cde6165a3e62a4b35306122ea97358fd260109"
+repetitions = 2
+
+[execution]
+adapter = "claude-code/2"
+network = true
+model = "claude-opus-5"
+effort = "high"
+binary = "~/.claude-eval-pins/bakeoff10/claude"
+binary_version = "2.1.258 (Claude Code)"
+binary_sha256 = "b63136194160791c27cfa7b0403060d85eb0752991625fde8c09f9acacb17c78"
+timeout_seconds = 1200
+workers = 3
+tools = ["Bash", "Read", "Edit", "Write", "Grep", "Glob"]
+permission_mode = "acceptEdits"
+allowed_tools = ["Bash(python3 *)"]
+max_budget_usd = 3.0
+python_interpreter = "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+python_version = "3.14.5"
+
+[[variants]]
+id = "n0-no-file"
+absent = true
+
+[[probes]]
+id = "config-bounds"
+path = "probes/config-bounds"
+tree_sha256 = "393d00e1853d9dbae38373ff44e732e4b5c8d3893afe1e0c6e7735c0e6c8db28"
+
+[[probes]]
+id = "month-end-recurrence"
+path = "probes/month-end-recurrence"
+tree_sha256 = "e4d76ec77fafe8c68d3cb5aa2e702cda97909c754eddb466dba45fde514948af"
+
+[[probes]]
+id = "rollup-hour-question"
+path = "probes/rollup-hour-question"
+tree_sha256 = "98e1637aeec930b29af1d8a0e3438d2fcb809351fdb578d98cd1973ddfea5603"
+
+[[probes]]
+id = "top-words-feature"
+path = "probes/top-words-feature"
+tree_sha256 = "ec462a97b5d20b4ce400f02fb7dcb805df398400ef5f583cb3afa4a3463bfa01"
+
+[[measures]]
+id = "oracle-pass"
+kind = "deterministic"
+grader = "oracle_pass"
+
+[[measures]]
+id = "tail-section"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "tail_section_count"
+maximum = 0
+
+[[measures]]
+id = "closing-offer-lexicon"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "closing_offer_count"
+maximum = 0
+
+[[measures]]
+id = "narration-opener"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "narration_opener"
+maximum = 0
+
+[[measures]]
+id = "length-cap"
+kind = "deterministic"
+grader = "final_message_scan"
+field = "words"
+maximum = 300
+
+[[measures]]
+id = "closing"
+kind = "judgmental"
+question = "What does the closing unit of the message do, as the rubric defines the labels?"
+rubric = "rubric-closing.md"
+rubric_sha256 = "5d7e336534ecc50967a8fec26d8c3b6afc5bd95afd7d2e621b6322999ddf0614"
+
+[[measures]]
+id = "completion-claim"
+kind = "judgmental"
+question = "What does the message assert about the state of the task?"
+rubric = "rubric-completion-claim.md"
+rubric_sha256 = "82160c0c5daba379e1ff7d7ace2633c9d51373cbe155e17b2f7bfde034720310"

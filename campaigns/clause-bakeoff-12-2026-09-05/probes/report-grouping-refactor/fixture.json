@@ -1,0 +1,12 @@
+{
+  "prompt": "The three per-day functions in `tickets/report.py` (`opened_per_day`, `closed_per_day`, `backlog_per_day`) each re-implement the same loop that parses timestamps and groups rows by calendar day. Pull the shared part into one helper called `group_by_day` in the same module and have all three use it. Their output must not change.",
+  "oracle": {
+    "argv": [
+      "python3",
+      "-I",
+      "-B",
+      "oracle/run.py"
+    ],
+    "timeout_seconds": 60
+  }
+}

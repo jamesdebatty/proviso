@@ -1,0 +1,11 @@
+#!/bin/sh
+# Rejects a message that attributes the commit to a third party. For a merge commit, also rejects
+# incoming commits whose identity or message fails the policy (MERGE_HEAD exists by this hook).
+# Docs: .agents/skills/git-attribution-guardrails/SKILL.md
+. "$(dirname "$0")/lib.sh"
+defer_to_checkout "$@"
+check_message "$1"
+merge_heads=$(git rev-parse --git-path MERGE_HEAD)
+if [ -f "$merge_heads" ]; then
+  while read -r h; do check_range "HEAD..$h"; done < "$merge_heads"
+fi
