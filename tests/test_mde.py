@@ -8,6 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import mde
 
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
+
 
 class BetaParams(unittest.TestCase):
     def test_mean_and_icc_round_trip(self):
@@ -89,6 +91,7 @@ class Heterogeneity(unittest.TestCase):
 
 
 class Bakeoff8Anchor(unittest.TestCase):
+    @unittest.skipUnless(mde.BAKEOFF8.exists(), PRIVATE_ARTIFACTS)
     def test_anchor_reads_the_published_judgments(self):
         result = mde.bakeoff8_anchor(judge="sonnet")
         self.assertEqual(result["tasks"], 5)

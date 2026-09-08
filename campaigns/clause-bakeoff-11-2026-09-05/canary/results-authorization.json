@@ -1,7 +1,0 @@
-{
-  "authorized_by": "James DeBatty",
-  "authorized_on": "2026-09-05",
-  "plan_sha256": "486f0264a6703dc7463abc4d7adc1959950df46e50494b2dcdaa32e9ec69cfd4",
-  "schema": "clause-run-authorization/1",
-  "statement": "James wrote, opening the 2026-09-05 session: \"Autonomously, I give you full authority for this run: run as many individual runs as you need. That means trial runs, adversarial reviews, code reviews, etc.\" and, at 02:48 MST after the council's design was reported in progress: \"Don't block on human (aka me). I want you to run this all the way through to the end. You have the authority to do whatever you need. I approve, so don't block on waiting for me until this is fully complete, done, and I can analyze the results of the complete run tomorrow morning.\" This file, written by the council chair on that instruction, authorizes the three-trial canary A (top-words-feature x A1, DEP, M1), a harness check excluded from campaign analysis on the plan whose hash is printed by `clause_campaign.py check` for this declaration."
-}

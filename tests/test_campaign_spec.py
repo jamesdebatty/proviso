@@ -29,6 +29,7 @@ BAKEOFF8_DECLARATION = ROOT / "sources" / "2026-08-25-t006-bakeoff8-declaration.
 BAKEOFF9 = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
 BAKEOFF9_DECLARATION = BAKEOFF9 / "campaign.toml"
 EXAMPLE_MANIFEST = ROOT / "sources" / "2026-08-24-t002-example-manifest.json"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 SCORE_METRICS = ("task_completion", "focus", "plain_language",
                  "jargon_discipline", "nuance_and_safety")
@@ -65,6 +66,7 @@ def write_declaration(directory: Path, text: str) -> Path:
     return path
 
 
+@unittest.skipUnless(BAKEOFF8_DECLARATION.exists() and BAKEOFF8_OUT.exists(), PRIVATE_ARTIFACTS)
 class Bakeoff8Reproduction(unittest.TestCase):
     """Regenerate bakeoff 8 from out/ through the declarative path."""
 
@@ -167,6 +169,7 @@ class Bakeoff8Reproduction(unittest.TestCase):
         self.assertNotIn(self.baseline, self.got["gates"])
 
 
+@unittest.skipUnless(BAKEOFF8_DECLARATION.exists() and BAKEOFF8_OUT.exists(), PRIVATE_ARTIFACTS)
 class Bakeoff8ReaderChecks(unittest.TestCase):
     """The declaration is load-bearing: the reader refuses results that contradict it."""
 
@@ -275,6 +278,7 @@ group_by = ["arm"]
             spec = cspec.load(write_declaration(directory, self.DECLARATION))
             return spec, cspec.analyze(spec, EXAMPLE_MANIFEST)
 
+    @unittest.skipUnless(EXAMPLE_MANIFEST.exists(), PRIVATE_ARTIFACTS)
     def test_trial_records_carry_the_spine_fields_the_reductions_name(self):
         with tempfile.TemporaryDirectory() as directory:
             spec = cspec.load(write_declaration(directory, self.DECLARATION))
@@ -287,6 +291,7 @@ group_by = ["arm"]
         self.assertEqual(first["output_tokens"], 452)
         self.assertEqual(first["turns"], 2)
 
+    @unittest.skipUnless(EXAMPLE_MANIFEST.exists(), PRIVATE_ARTIFACTS)
     def test_a_mid_run_surface_mismatch_survives_into_the_summary(self):
         _, got = self.analyze()
         self.assertEqual(got["reductions"]["trials"]["control"], 2)
@@ -294,6 +299,7 @@ group_by = ["arm"]
                          {"match": 1, "mismatch": 1})
         self.assertEqual(got["reductions"]["median_output_tokens"]["control"], 296)
 
+    @unittest.skipUnless(EXAMPLE_MANIFEST.exists(), PRIVATE_ARTIFACTS)
     def test_a_stratum_the_arm_does_not_declare_raises(self):
         declaration = self.DECLARATION.replace('strata = ["b1-easy"]', 'strata = ["b3"]')
         with tempfile.TemporaryDirectory() as directory:

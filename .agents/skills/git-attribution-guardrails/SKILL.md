@@ -69,7 +69,7 @@ It uses `git filter-branch`, so rewritten commits get new hashes, and when
 anything was rewritten the pre-repair branch is kept under
 `refs/original/<branch>/`. A second run refuses while that backup exists and
 prints the command that clears it. A branch that was already pushed needs a
-force-push afterwards; that is James's decision, not the agent's.
+force-push afterwards; that is the maintainer's decision, not the agent's.
 
 ## Installing in another repository
 

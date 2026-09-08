@@ -19,6 +19,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import capture_spine as cs  # noqa: E402
 
 SECRET = "sk-ant-api03-NOTAREALKEYbutlooksLikeOne0000"
+TEXT_SIDECAR = (Path(__file__).resolve().parents[1]
+                / "sources/2026-08-24-t001-surface-sdk-declared.text.json")
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 def request_body(*, system=("alpha", "bravo"), tools=("Bash", "Read"),
@@ -229,6 +232,7 @@ class RetentionBoundary(unittest.TestCase):
             cs.write_record(target, {"sha256": "b" * 64})
             self.assertEqual(json.loads(target.read_text()), {"sha256": "b" * 64})
 
+    @unittest.skipUnless(TEXT_SIDECAR.exists(), PRIVATE_ARTIFACTS)
     def test_committed_system_prompt_sidecar_passes_its_text_policy(self):
         repo = Path(cs.__file__).resolve().parent.parent
         sidecar = json.loads(
@@ -237,6 +241,7 @@ class RetentionBoundary(unittest.TestCase):
         self.assertGreater(max(map(len, sidecar["system_blocks"])), cs.MAX_RECORD_STRING)
         self.assertEqual(cs.text_retention_problems(sidecar), [])
 
+    @unittest.skipUnless(TEXT_SIDECAR.exists(), PRIVATE_ARTIFACTS)
     def test_text_sidecar_writer_writes_the_committed_system_prompt(self):
         repo = Path(cs.__file__).resolve().parent.parent
         sidecar = json.loads(

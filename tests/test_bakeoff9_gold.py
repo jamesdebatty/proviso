@@ -16,6 +16,8 @@ import bakeoff9_judge as judge
 
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+CORRECTED_PILOT = CAMPAIGN / "results" / "pilot-corrected-2026-08-27"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 T0 = datetime(2026, 8, 20, 12, 0, tzinfo=timezone.utc)
 
 
@@ -61,6 +63,7 @@ def assert_unfinished_draft_rejected(test, draft, finalize):
         finalize(draft)
 
 
+@unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
 class SoloOwnerWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -259,6 +262,7 @@ def pinned(class_name, value):
     return labels_fn
 
 
+@unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
 class DegenerateClassTests(unittest.TestCase):
     """Only the four gated classes must vary; the nine reported ones may not."""
 

@@ -16,9 +16,10 @@ The unit suite is Python standard library only, Python 3.11 or newer:
 python3 -m unittest discover -s tests
 ```
 
-Two tests skip by design — they drive a pinned CLI binary no clone carries. Set
-`BAKEOFF9_CLAUDE_BINARY` to that binary to run them. The `clause-shipper-smoke`
-synthetic campaign also runs offline with no keys.
+Some tests skip by design, each saying why: two drive a pinned CLI binary no
+clone carries (set `BAKEOFF9_CLAUDE_BINARY` to that binary to run them), and the
+rest read raw campaign artifacts that are retained privately. The
+`clause-shipper-smoke` synthetic campaign also runs offline with no keys.
 
 ## What a live bakeoff needs
 

@@ -13,6 +13,9 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
+PREREGISTRATION = ROOT / "notes" / "preregistration-2026-08-04.md"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
+
 
 def load_script(name: str):
     path = ROOT / "scripts" / f"{name}.py"
@@ -30,6 +33,7 @@ human_review = load_script("human_review")
 
 
 class HarnessTests(unittest.TestCase):
+    @unittest.skipUnless(PREREGISTRATION.exists(), PRIVATE_ARTIFACTS)
     def test_legacy_frozen_input_set_does_not_include_the_execution_router(self):
         with tempfile.TemporaryDirectory() as temp:
             hashes = run_eval.freeze_inputs(Path(temp))

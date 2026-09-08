@@ -29,6 +29,8 @@ from test_bakeoff9_gold import labels_for, run_workflow
 
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+CORRECTED_PILOT = CAMPAIGN / "results" / "pilot-corrected-2026-08-27"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 # One oracle fixture and one no-oracle fixture, so the escalated rows cover
@@ -289,6 +291,7 @@ class FullPipeline(unittest.TestCase):
         finally:
             temporary.cleanup()
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_fake_240_capsules_grade_calibrate_and_decide_without_network(self):
         campaign_temp, campaign = frozen_campaign()
         try:
@@ -378,6 +381,7 @@ class FullPipeline(unittest.TestCase):
         finally:
             campaign_temp.cleanup()
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_failed_calibration_asks_no_escalation_question(self):
         campaign_temp, campaign = frozen_campaign()
         try:

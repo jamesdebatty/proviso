@@ -37,6 +37,11 @@ DOWNLOAD_BASE_URL="https://downloads.claude.ai/claude-code-releases"
 DOWNLOAD_DIR="$HOME/.claude/downloads"
 """
 
+REPO = Path(__file__).resolve().parents[1]
+EXAMPLE_MANIFEST = REPO / "sources" / "2026-08-24-t002-example-manifest.json"
+WORKED_PIN = REPO / "sources" / "2026-08-25-t005-environment-pin.json"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
+
 PAYLOAD = b"#!/usr/bin/env pretend-binary\n"
 PAYLOAD_SHA = hashlib.sha256(PAYLOAD).hexdigest()
 
@@ -366,6 +371,7 @@ class TestEnvironmentBlock(unittest.TestCase):
         self.assertIn("pin_extension is", " ".join(ep.environment_problems(env)))
 
 
+@unittest.skipUnless(EXAMPLE_MANIFEST.exists(), PRIVATE_ARTIFACTS)
 class TestAdditiveToCaptureSpine(unittest.TestCase):
     """The extension must not fork `capture-spine/1`."""
 
@@ -408,6 +414,7 @@ class TestAdditiveToCaptureSpine(unittest.TestCase):
         self.assertEqual(cs.validate_manifest(merged), cs.validate_manifest(self.manifest))
 
 
+@unittest.skipUnless(WORKED_PIN.exists(), PRIVATE_ARTIFACTS)
 class TestWorkedInstance(unittest.TestCase):
     """`sources/2026-08-25-t005-environment-pin.json` is the shipped example."""
 
@@ -459,12 +466,14 @@ class TestCli(unittest.TestCase):
                 self.assertEqual(ep.main(["verify", str(path), "--checksum", PAYLOAD_SHA]), 1)
             self.assertIn("checksum verification failed", out.getvalue())
 
+    @unittest.skipUnless(WORKED_PIN.exists(), PRIVATE_ARTIFACTS)
     def test_check_passes_the_worked_instance(self):
         base = Path(__file__).resolve().parents[1]
         path = base / "sources" / "2026-08-25-t005-environment-pin.json"
         with self.quiet():
             self.assertEqual(ep.main(["check", str(path)]), 0)
 
+    @unittest.skipUnless(WORKED_PIN.exists(), PRIVATE_ARTIFACTS)
     def test_check_rejects_a_manifest_whose_checksum_was_edited(self):
         base = Path(__file__).resolve().parents[1]
         doc = json.loads((base / "sources" / "2026-08-25-t005-environment-pin.json").read_text())
@@ -486,6 +495,7 @@ class TestCli(unittest.TestCase):
             self.assertIn("environment ok", out.getvalue())
             self.assertNotIn(f"{ep.PIN_EXTENSION} ok", out.getvalue())
 
+    @unittest.skipUnless(WORKED_PIN.exists(), PRIVATE_ARTIFACTS)
     def test_acquire_rejects_a_manifest_missing_binary_version_before_indexing_it(self):
         base = Path(__file__).resolve().parents[1]
         doc = json.loads((base / "sources" / "2026-08-25-t005-environment-pin.json").read_text())

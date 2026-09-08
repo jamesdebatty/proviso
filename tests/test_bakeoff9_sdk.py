@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # The real-preflight suite drives a pinned claude binary that no clone carries.
 # Point BAKEOFF9_CLAUDE_BINARY at it to run those cases; unset, they skip.
 PINNED_BINARY = Path(os.environ.get("BAKEOFF9_CLAUDE_BINARY", ""))
+SDK_BASELINE = ROOT / "sources" / "2026-08-24-t002-arm-baseline-sdk-declared.json"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import bakeoff9_sdk as sdk
@@ -807,6 +809,7 @@ class SDKContainmentTests(unittest.TestCase):
 
 
 class SDKFakeAdapterTests(unittest.TestCase):
+    @unittest.skipUnless(SDK_BASELINE.exists(), PRIVATE_ARTIFACTS)
     def test_fake_fixture_streams_acknowledged_boundaries(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

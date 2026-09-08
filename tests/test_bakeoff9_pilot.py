@@ -17,6 +17,7 @@ RUN_DIR = (
     / "pilot-corrected-2026-08-27"
 )
 GRADES = RUN_DIR / "mechanical-grades.json"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 def adjudication(cases):
@@ -53,6 +54,7 @@ def adjudication(cases):
     }
 
 
+@unittest.skipUnless(RUN_DIR.exists(), PRIVATE_ARTIFACTS)
 class PilotEvidenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

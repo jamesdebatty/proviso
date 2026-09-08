@@ -17,6 +17,13 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import execution  # noqa: E402
 
+CORRECTED_PILOT = (ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+                   / "results" / "pilot-corrected-2026-08-27")
+# The public release replaces README.md with the overlay one; only the lab
+# README carries the historical-adapter contract these statements come from.
+LAB_README = "## Historical adapters" in (ROOT / "README.md").read_text()
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
+
 
 class ExecutionInterfaceTests(unittest.TestCase):
     def test_status_names_the_active_protocol_on_the_default_interface(self):
@@ -38,6 +45,7 @@ class ExecutionInterfaceTests(unittest.TestCase):
         self.assertIn("pilot-ready-for-paid-dispatch: no", completed.stdout)
         self.assertIn("run-specific-preflight-required", completed.stdout)
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_check_runs_the_active_path_through_the_cli(self):
         completed = subprocess.run(
             [sys.executable, str(ROOT / "scripts" / "execution.py"), "check", "--json"],
@@ -120,6 +128,7 @@ class ExecutionInterfaceTests(unittest.TestCase):
         self.assertNotIn("t-013", serialized)
         self.assertNotIn("oracle-integrity-open", serialized)
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_pilot_declaration_is_exact_and_self_validating(self):
         self.assertEqual([], execution.pilot_declaration_problems())
         declaration = execution.tomllib.loads(execution.PILOT_DECLARATION.read_text())
@@ -165,6 +174,7 @@ class ExecutionInterfaceTests(unittest.TestCase):
         self.assertEqual(1, exit_code)
         self.assertFalse(json.loads(output.getvalue())["passed"])
 
+    @unittest.skipUnless(LAB_README, PRIVATE_ARTIFACTS)
     def test_legacy_safety_contract_is_documented(self):
         readme = " ".join((ROOT / "README.md").read_text().split())
         for statement in (

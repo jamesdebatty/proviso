@@ -32,6 +32,7 @@ import clause_judge as cj  # noqa: E402
 
 SMOKE = ROOT / "campaigns" / "clause-shipper-smoke"
 BAKEOFF_10_RUN = ROOT / "campaigns" / "clause-bakeoff-10-2026-09-01" / "results" / "run-2026-09-01"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 VERSION = "9.9.9 (Fake Claude Code)"
 MODEL = "claude-opus-5"
 SEED = 1  # dispatch_seed whose two blocks come out treatment-first, then control-first
@@ -550,6 +551,7 @@ class AgenticCampaign(unittest.TestCase):
                           "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}', "--permission-mode", "dontAsk",
                           "--no-session-persistence", "--prompt-suggestions", "false"])
 
+    @unittest.skipUnless(BAKEOFF_10_RUN.exists(), PRIVATE_ARTIFACTS)
     def test_sealed_bakeoff_10_run_still_verifies(self):
         summary = cc.ClauseCampaign.verify(BAKEOFF_10_RUN)
         self.assertEqual(summary["trial_count"], 75)

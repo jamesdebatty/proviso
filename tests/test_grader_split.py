@@ -14,6 +14,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
 ARCHIVED_RUN = ROOT / "results" / "runs" / "opus5-ste-20260805T042413Z"
+ARCHIVED_RUBRIC = ROOT / "archive" / "grader-rubric-2026-08-28-pairwise" / "rubric.md"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 def load_script(name: str):
@@ -113,6 +115,7 @@ class RubricSplitTests(unittest.TestCase):
         "not material.\n"
     )
 
+    @unittest.skipUnless(ARCHIVED_RUN.exists(), PRIVATE_ARTIFACTS)
     def test_judge_half_moved_only_by_the_recorded_withdrawal(self):
         """The judge's instrument drifts only where an amendment says it may."""
         frozen = (ARCHIVED_RUN / "inputs" / "rubric.md").read_text()
@@ -122,6 +125,7 @@ class RubricSplitTests(unittest.TestCase):
         self.assertEqual(expected, judge_eval.judge_system_prompt(rubric))
         self.assertEqual(frozen, judge_eval.judge_system_prompt(frozen))
 
+    @unittest.skipUnless(ARCHIVED_RUN.exists() and ARCHIVED_RUBRIC.exists(), PRIVATE_ARTIFACTS)
     def test_archived_rubric_preserves_the_pre_withdrawal_instrument(self):
         archived = (
             ROOT / "archive" / "grader-rubric-2026-08-28-pairwise" / "rubric.md"
@@ -543,6 +547,7 @@ class GradingFrameTests(unittest.TestCase):
         self.assertEqual("ste", winner["detail"]["arm"])
 
 
+@unittest.skipUnless(ARCHIVED_RUN.exists(), PRIVATE_ARTIFACTS)
 class ArchivedCampaignTests(unittest.TestCase):
     """A grading pass over an existing campaign, with no model call."""
 

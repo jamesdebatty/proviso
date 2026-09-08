@@ -14,6 +14,8 @@ import bakeoff9_grade as grade
 import bakeoff9_run as run
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+CORRECTED_PILOT = CAMPAIGN / "results" / "pilot-corrected-2026-08-27"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 class FakeAdapter:
@@ -52,6 +54,7 @@ class CanonicalGradeBridgeTests(unittest.TestCase):
         )
         return plan
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_partial_canary_reaches_real_score_rows(self):
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
             root = Path(temporary) / "run"
@@ -71,6 +74,7 @@ class CanonicalGradeBridgeTests(unittest.TestCase):
         }
         self.assertEqual({"grade_run", "write_grades", "main"}, public_functions)
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_unexpected_trial_file_is_refused_by_core(self):
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
             root = Path(temporary) / "run"

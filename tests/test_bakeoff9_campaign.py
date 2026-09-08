@@ -18,6 +18,8 @@ import bakeoff9_run
 import execution
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+CORRECTED_PILOT = CAMPAIGN / "results" / "pilot-corrected-2026-08-27"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 class FakeAdapter:
@@ -91,6 +93,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             code = execution.main(argv, campaign=owner)
         return code, stdout.getvalue(), stderr.getvalue()
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_real_cli_canary_then_remaining_trials_without_repurchase(self):
         calls = []
         owner = self.owner(calls)
@@ -132,6 +135,7 @@ class CampaignEndToEndTests(unittest.TestCase):
         self.assertEqual(1, artifacts[0].to_dict()["authorization"]["authorized_trial_count"])
         self.assertEqual(19, artifacts[1].to_dict()["authorization"]["authorized_trial_count"])
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_failed_trial_and_preflight_mismatch_return_nonzero(self):
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
             calls = []
@@ -172,6 +176,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             self.assertTrue(any(path.name.endswith(".prepared.json") for path in attempt_files))
             self.assertFalse(any(path.name.endswith(".dispatched.json") for path in attempt_files))
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_freeze_opens_full_plan_while_decision_inputs_remain_closed(self):
         calls = []
         readiness = self.owner(calls).readiness()
@@ -186,6 +191,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             "run-specific-preflight-required", {item[0] for item in readiness.blockers}
         )
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_selection_is_plan_order_not_argument_order(self):
         owner = self.owner([])
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
@@ -194,6 +200,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             selected = owner.select_trials(Path(temporary) / "run", plan, trial_ids=requested)
         self.assertEqual([plan.trials[1].trial_id, plan.trials[4].trial_id], [x.trial_id for x in selected])
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_unknown_selection_is_refused(self):
         owner = self.owner([])
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
@@ -201,6 +208,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             with self.assertRaisesRegex(bakeoff9_campaign.CampaignError, "unknown"):
                 owner.select_trials(Path(temporary) / "run", plan, trial_ids=["unknown"])
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_empty_and_conflicting_selection_is_refused(self):
         owner = self.owner([])
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
@@ -216,6 +224,7 @@ class CampaignEndToEndTests(unittest.TestCase):
         self.assertEqual(first, bakeoff9_run.authorized_trial_ids_sha256(["a", "b"]))
         self.assertNotEqual(first, bakeoff9_run.authorized_trial_ids_sha256(["b", "a"]))
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_subset_authorization_rejects_wrong_hash_and_count(self):
         plan = self.owner([]).build_plan()
         selected = [plan.trials[0].trial_id]
@@ -225,6 +234,7 @@ class CampaignEndToEndTests(unittest.TestCase):
                 authorized_trial_count=2,
             )
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_max_trials_selects_only_the_uncommitted_prefix(self):
         owner = self.owner([])
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:
@@ -233,6 +243,7 @@ class CampaignEndToEndTests(unittest.TestCase):
             selected = owner.select_trials(run_dir, plan, max_trials=3)
         self.assertEqual([case.trial_id for case in plan.trials[:3]], [case.trial_id for case in selected])
 
+    @unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
     def test_plan_only_prints_exact_canary_subset_hash_before_authorization(self):
         owner = self.owner([])
         with tempfile.TemporaryDirectory(dir="/tmp") as temporary:

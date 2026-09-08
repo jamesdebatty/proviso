@@ -16,6 +16,8 @@ import bakeoff9_run as run
 import score_eval
 
 CAMPAIGN = ROOT / "campaigns" / "clause-bakeoff-9-2026-08-22"
+CORRECTED_PILOT = CAMPAIGN / "results" / "pilot-corrected-2026-08-27"
+PRIVATE_ARTIFACTS = "requires private lab artifacts that are not included in the public release"
 
 
 class FakeAdapter:
@@ -76,6 +78,7 @@ class IncompleteFailureAdapter:
         )
 
 
+@unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
 class PilotPlanTests(unittest.TestCase):
     def test_plan_is_the_exact_deterministic_twenty_case_pilot(self):
         first = run.build_pilot_plan(CAMPAIGN)
@@ -201,6 +204,7 @@ class PilotPlanTests(unittest.TestCase):
                 run.materialize_fixture(case, Path(temporary) / "workspaces")
 
 
+@unittest.skipUnless(CORRECTED_PILOT.exists(), PRIVATE_ARTIFACTS)
 class TrialLedgerTests(unittest.TestCase):
     def test_core_usage_accepts_capture_spine_turn_counters(self):
         usage = {
